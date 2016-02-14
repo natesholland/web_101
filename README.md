@@ -6,6 +6,8 @@ I'm developing this for use with the new interns at [Spiceworks](https://www.spi
 If you want to use this in your company please feel free to take it and adapt it
 to fit your training needs.
 
+An example of this app is currently running on [Heroku](http://web101.herokuapp.com/).
+
 ## Running the application
 
 This application is easy to run. Install the latest version of ruby and run `bundle install` then `ruby web_101.rb`

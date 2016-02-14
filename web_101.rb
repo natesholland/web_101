@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'sinatra/contrib'
 require 'json'
-require 'pry'
+# require 'pry'
 
 get '/' do
   @hostname = human_host_name
@@ -21,7 +21,8 @@ end
 
 get '/params' do
   @params = params
-  @url = request.scheme + '://' + human_host_name + '/params'
+  scheme = request.scheme || 'http'
+  @url = scheme + '://' + human_host_name + '/params'
   @show_next = params.include? 'name'
   erb :params
 end
@@ -63,6 +64,7 @@ private
 def human_host_name
   hostname = request.host
   hostname += ":#{request.port}" if request.port != 80
+  hostname
 end
 
 def human_url

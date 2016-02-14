@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 
 gem 'sinatra'
-gem 'pry'
-gem 'rerun'
 gem 'sinatra-contrib'
+group :development do
+  gem 'pry'
+  gem 'rerun'
+end
