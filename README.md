@@ -21,3 +21,4 @@ I'd be happy to discuss how to make this teaching tool better.
 ## Licensing
 
 This project is licensed under the terms of the MIT license.
+See [LICENSE.md](/LICENSE.md) for more information
