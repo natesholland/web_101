@@ -1,5 +1,7 @@
 # Web 101 App
 
+[![Build Status](https://travis-ci.org/natesholland/web_101.svg?branch=master)](https://travis-ci.org/natesholland/web_101)
+
 The purpose of this app is to be used in a training session to teach the very basics
 of web development and how the internet works.
 I'm developing this for use with the new interns at [Spiceworks](https://www.spiceworks.com).
