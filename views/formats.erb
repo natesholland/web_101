@@ -1,11 +1,22 @@
-Here is some <strong>html</strong>
-<br>
-
-other formats include:
+<h1> Request formats</h1>
+<p>
+  So far you've been looking at html pages. This stands for "Hyper Text Markup Language".
+  99% of what humans see on the web is html pages.
+  This is what we use to convey information in a relatively pretty and human readable format.
+  <br>
+  But this isn't the only format that is used to communicate between your
+  browser and the server, as well as between servers.
+  In order to communicate what format you want to receive you need to set the 'Accept' header
+  to the appropriate type.
+  Below are some different examples of formats used.
+  Why don't you try checking them out by manually setting your 'Accept' header using
+  a tool like Postman, curl, or wget.
+  When you're done looking around look in the JSON payload for instructions to the next step.
+</p>
 
 <table border="1">
 <tr>
-  <th>Fromat</th>
+  <th>Format</th>
   <th>Header</th>
 </tr>
 <tr>
@@ -30,4 +41,4 @@ other formats include:
 </tr>
 </table>
 
-<p>Try checking out the JSON payload for instructions on getting to the next challenge. </p>
+<p> If you're having issues try this command: 'curl -H "Accept: application/json" <%= request.url %>'
