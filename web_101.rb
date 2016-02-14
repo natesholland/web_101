@@ -1,13 +1,18 @@
 require 'sinatra'
 require 'sinatra/contrib'
 require 'json'
+require 'pry'
 
 get '/' do
-  return %q(Welcome to Web 101, let's try getting another path. How about GET /this/is/a/path)
+  @hostname = human_host_name
+  erb :index
 end
 
 get '/this/is/a/path' do
-  return %q(Good job!)
+  @hostname = human_host_name
+  @url = human_url
+  @protocol = request.scheme + '://'
+  erb :path
 end
 
 post '/beam_me_up' do
@@ -45,6 +50,15 @@ end
 
 
 private
+
+def human_host_name
+  hostname = request.host
+  hostname += ":#{request.port}" if request.port != 80
+end
+
+def human_url
+  request.url
+end
 
 SOAP_STRING = %q(<?xml version="1.0"?>
 <soap:Envelope
