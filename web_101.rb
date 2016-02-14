@@ -19,6 +19,13 @@ post '/beam_me_up' do
   return %q(Very nice. This was a post)
 end
 
+get '/params' do
+  @params = params
+  @url = request.scheme + '://' + human_host_name + '/params'
+  @show_next = params.include? 'name'
+  erb :params
+end
+
 get '/formats' do
   respond_with :index, :name => 'example' do |f|
     f.txt { 'This is plain text.' }
@@ -47,7 +54,9 @@ get '/formats' do
   end
 end
 
-
+get '/FIXME' do
+  return %q(Oops! Looks like some part of the app is not complete)
+end
 
 private
 
@@ -58,6 +67,12 @@ end
 
 def human_url
   request.url
+end
+
+helpers do
+  def h(text)
+    Rack::Utils.escape_html(text)
+  end
 end
 
 SOAP_STRING = %q(<?xml version="1.0"?>

@@ -1,0 +1,33 @@
+<h1> URL params </h1>
+
+<p>
+  Humans need a way to send data to the server.
+  One way that we've already seen is using a path to tell the server.
+  Another way is by sending params which are for data that does not fit
+  conveniently into a path structure.
+</p>
+
+<h2> Formatting Params </h2>
+
+Typicall params follow the folowing format:
+<br>
+<a href="<%= @url %>?foo=bar&baz=bang"> <%= @url %>?foo=bar&baz=bang </a>
+<br>
+
+They start with a question mark, are separated by ampersands, and look like 'key=value'
+
+<h3> These are the params you submitted </h3>
+
+<%= h @params %>
+
+<p>
+  Play around with the params, when you're done submit your name as the parameter "name" to go to the next step.
+</p>
+
+<% if @show_next %>
+
+  <h3> Good job! Here's the next step: </h3>
+
+  Go to <a href='/FIXME'> /FIXME </a> to see the next section.
+
+<% end %>
