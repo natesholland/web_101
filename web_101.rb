@@ -14,10 +14,12 @@ post '/beam_me_up' do
   return %q(Very nice. This was a post)
 end
 
-get '/format' do
+get '/formats' do
   respond_with :index, :name => 'example' do |f|
     f.txt { 'This is plain text.' }
-    f.html { 'Here is some <strong>html</strong>' }
+    f.html do
+      erb :formats
+    end
     f.json do
       {
         declaration: 'json is the best',
@@ -25,7 +27,8 @@ get '/format' do
         an_int: 1,
         null_value: nil,
         arrays_work_too: [:wiz, :bang, :baz],
-        inception: { hash: 'inside a hash'}
+        inception: { hash: 'inside a hash'},
+        instructions: 'Visit GET /FIXME for the next section'
       }.to_json
     end
     f.xml do
