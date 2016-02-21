@@ -17,7 +17,7 @@
 </p>
 
 <p>
-  <%= @headers %>
+  <%= h @headers %>
 </p>
 
 <p>
@@ -25,9 +25,9 @@
   flavor of pie to continue.
 </p>
 
-<% if @headers['PIE'] %>
+<% if h @headers['PIE'] %>
 <p>
-  <%= @headers['PIE'] %> is a very good flavor of pie.
+  <%= h @headers['PIE'] %> is a very good flavor of pie.
   To continue please visit <a href='/FIXME'>/FIXME</a>
 </p>
 <% end %>
