@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'sinatra/contrib'
 require 'json'
-require 'pry'
+# require 'pry'
 
 get '/' do
   @hostname = human_host_name
