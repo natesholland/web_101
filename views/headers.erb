@@ -1,0 +1,33 @@
+<h1> Headers </h1>
+
+<p>
+  The web is built on top of a protocal called HTTP (Hypertext Transfer Protocol).
+  Each HTTP request and response is broken into a section for headers and a section
+  for the body.
+  The headers contain meta-data about the request.
+  Humans almost never see what is in the headers, but they are very helpful to the
+  server and the browser to know exactly what information is being sent.
+</p>
+
+<img src="http_request.png" alt="http request diagram">
+
+<p>
+  You can set headers manually if you want using postman or curl. Below are the
+  headers that you sent the browser.
+</p>
+
+<p>
+  <%= @headers %>
+</p>
+
+<p>
+  Manually send a header called 'PIE' and make the content of the header your favorite
+  flavor of pie to continue.
+</p>
+
+<% if @headers['PIE'] %>
+<p>
+  <%= @headers['PIE'] %> is a very good flavor of pie.
+  To continue please visit <a href='/FIXME'>/FIXME</a>
+</p>
+<% end %>

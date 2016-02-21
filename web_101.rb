@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'sinatra/contrib'
 require 'json'
-# require 'pry'
+require 'pry'
 
 get '/' do
   @hostname = human_host_name
@@ -53,6 +53,16 @@ get '/formats' do
       SOAP_STRING
     end
   end
+end
+
+get '/headers' do
+  keys = request.env.keys.select { |h| h.start_with? 'HTTP_'}
+  @headers = {}
+  keys.each do |key|
+    value = request.env[key]
+    @headers[key.gsub('HTTP_', '')] = value
+  end
+  erb :headers
 end
 
 get '/FIXME' do
