@@ -73,7 +73,7 @@ private
 
 def human_host_name
   hostname = request.host
-  hostname += ":#{request.port}" if request.port != 80
+  hostname += ":#{request.port}" if request.port != 80 && request.port != 443
   hostname
 end
 
