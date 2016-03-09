@@ -33,7 +33,7 @@ get '/formats' do
     f.html do
       erb :formats
     end
-    f.json do
+    f.on('application/json') do
       {
         declaration: 'json is the best',
         foo: 'bar',
@@ -80,6 +80,120 @@ end
 def human_url
   request.url
 end
+
+# -----------------------------------------------------------------------------
+# DND stuff
+# -----------------------------------------------------------------------------
+
+enable :sessions
+
+before /dnd\/*/ do
+  if request.url.match(/.json$/)
+    request.accept.unshift('application/json')
+    request.path_info.gsub!(/.json$/, '')
+  end
+end
+
+PARTY = [{id: 1, name: 'Francis', class: 'Warlock',    level: 8},
+         {id: 2, name: 'Greg',    class: 'Warrior',    level: 10},
+         {id: 3, name: 'Scott',   class: 'Fighter',    level: 9},
+         {id: 4, name: 'Jay',     class: 'Bard',       level: 10},
+         {id: 5, name: 'Tabrez',  class: 'Rogue',      level: 10}].freeze
+
+get '/dnd/party' do # index
+  party = PARTY
+  if session[:dnd_id]
+    new_member = { id: session[:dnd_id],
+                   name: session[:name],
+                   class: session[:class],
+                   level: session[:level] }
+    party += [new_member]
+  end
+
+  respond_with :index, name: 'example' do |f|
+    f.html do
+      erb :'dnd/party', locals: { party: party }
+    end
+    f.on('application/json') do
+      response_hash = { party: party,
+                       join_link: '/dnd/join.json' }
+      response_hash.to_json
+    end
+  end
+end
+
+get '/dnd/join' do # new
+  render_join_form
+end
+
+post '/dnd/join' do # create
+  name = params['name']
+  klass = params['class']
+  level = params['level'].to_i
+
+  render_join_form('Uh-oh! Params mismatch') and return unless name && klass && level
+  render_join_form('Sorry, but you\'re outside our level range!') and return if level < 8 || level > 10
+
+  dnd_id = PARTY.size + 1
+
+  session[:dnd_id] = dnd_id
+  session[:name] = name
+  session[:class] = klass
+  session[:level] = level
+
+  new_party = PARTY + [{ id: dnd_id, name: name, class: klass, level: level }]
+
+  respond_with :index, name: 'I still don\'t get this' do |f|
+    f.html do
+      erb :'dnd/party', locals: { party: new_party }
+    end
+    f.on('application/json') do
+      new_party.to_json
+    end
+  end
+end
+
+def render_join_form(error = nil)
+  new_member = { name: 'Bob', class: 'Barbarian', level: 9 }
+  respond_with :index, name: 'why does this exist' do |f|
+    f.html do
+      erb :'dnd/join', locals: {new_member: new_member, error: error}
+    end
+    f.on('application/json') do
+      json_hash = {format: new_member}
+      json_hash[:error] = error if error
+      json_hash.to_json
+    end
+  end
+end
+
+get '/v2/dnd/join' do
+  new_member = { name: 'Bob', class: 'Barbarian', level: 9 }
+  erb :'dnd/join2', locals: { new_member: new_member }
+end
+
+post '/v2/dnd/join' do
+  name = params['name']
+  klass = params['class']
+  level = params['level']
+
+  halt 400 unless name && klass && level
+  halt 400 if name.empty? || klass.empty? || level.empty?
+
+  level = level.to_i
+  halt 409, 'Your level is outside our range!' if level < 8 || level > 10
+
+  session[:dnd_id] = PARTY.size + 1
+  session[:name] = name
+  session[:class] = klass
+  session[:level] = level
+
+  halt 201
+end
+
+# -----------------------------------------------------------------------------
+# DND Example end
+# -----------------------------------------------------------------------------
 
 helpers do
   def h(text)

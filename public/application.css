@@ -1,0 +1,16 @@
+form.form-horizontal {
+  border-width: 1px;
+  border-radius: 4px 4px 0 0;
+  border-style: solid;
+  border-color: #ddd;
+
+  padding: 45px 15px 15px 0;
+}
+
+.padded-bottom {
+  padding-bottom: 10px;
+}
+
+.error-text {
+  color: red;
+}
