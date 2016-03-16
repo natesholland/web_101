@@ -116,7 +116,7 @@ get '/dnd/party' do # index
     end
     f.on('application/json') do
       response_hash = { party: party,
-                       join_link: '/dnd/join.json' }
+                        join_link: '/dnd/join.json' }
       response_hash.to_json
     end
   end
@@ -131,8 +131,11 @@ post '/dnd/join' do # create
   klass = params['class']
   level = params['level'].to_i
 
-  render_join_form('Uh-oh! Params mismatch') and return unless name && klass && level
+  render_join_form('Uh-oh! Params mismatch') and return unless name && klass
+  halt 500 unless level
   render_join_form('Sorry, but you\'re outside our level range!') and return if level < 8 || level > 10
+
+  status 201
 
   dnd_id = PARTY.size + 1
 
@@ -161,7 +164,10 @@ def render_join_form(error = nil)
     end
     f.on('application/json') do
       json_hash = {format: new_member}
-      json_hash[:error] = error if error
+      if error
+        json_hash[:error] = error
+        status 409
+      end
       json_hash.to_json
     end
   end
